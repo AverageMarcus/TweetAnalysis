@@ -2,7 +2,6 @@ require('dotenv').config();
 const Hapi = require('hapi');
 const Hoek = require('hoek');
 const server = new Hapi.Server();
-const fetch = require('fetch');
 const cognitiveServices = require('./CognitiveServices');
 const tweetService = require('./TweetService');
 
