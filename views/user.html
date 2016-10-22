@@ -1,0 +1,32 @@
+<h1>{{user}}</h1>
+
+<h2 class="sentiment sentiment-{{summary.sentiment}}">{{summary.sentiment}}</h2>
+<h3>
+  <div class="bar bar-😊" style="width:{{summary.😊}}%"></div>
+  <div class="bar bar-😔" style="width:{{summary.😔}}%"></div>
+</h3>
+
+<ul>
+  {{#each tweets}}
+    <li>
+      <div class="tweet" data-id="{{this.id}}">
+       <div class="analysis-results">
+          <span class="sentiment sentiment-{{this.sentiment}}">{{this.sentiment}}</span>
+          <span class="key-phrase">{{this.keyPhrase}}</span>
+       </div>
+      </div>
+    </li>
+  {{/each}}
+</ul>
+
+
+<script>
+  var tweets = document.querySelectorAll('.tweet');
+  tweets.forEach(function(element) {
+    var target = document.createElement('div');
+    element.insertBefore(target, element.firstChild);
+    twttr.widgets.createTweet(element.dataset.id, target, {
+      conversation: 'none'
+    });
+  });
+</script>

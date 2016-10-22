@@ -1,0 +1,22 @@
+<h1>Tweet Analysis</h1>
+<h2>Enter Twitter handle below</h2>
+
+<input type="text" id="handle"><br>
+<input type="submit" value="Analyse" id="analyse" />
+
+<script>
+  function loadUser(user) {
+    window.location = '/user/' + user;;
+  }
+  document.getElementById('analyse').addEventListener('click', function(event) {
+    event.preventDefault();
+    loadUser(document.getElementById('handle').value);
+  });
+
+  document.getElementById('handle').addEventListener('keyup', function(event) {
+    if(event.keyCode == 13){
+      event.preventDefault();
+      loadUser(this.value);
+    }
+  });
+</script>

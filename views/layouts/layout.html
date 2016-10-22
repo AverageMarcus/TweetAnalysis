@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <title>Tweet Analysis</title>
+    <style>
+      main {
+        max-width: 650px;
+        margin: 10px auto;
+        text-align: center;
+      }
+
+      ul {
+        list-style: none;
+      }
+
+      .tweet {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .twitter-tweet {
+        margin: 0 auto !important;
+      }
+
+      .sentiment {
+        font-weight: bold;
+        font-size: 1.5em;
+      }
+      .sentiment-😊 {
+        color: green;
+      }
+      .sentiment-😔 {
+        color: red;
+      }
+
+      .bar {
+        float:left;
+        height:25px;
+      }
+      .bar-😊 {
+        background-color: green;
+      }
+      .bar-😔 {
+        background-color: red;
+      }
+    </style>
+    <script src="https://platform.twitter.com/widgets.js"></script>
+  </head>
+  <body>
+    <main>
+      {{{content}}}
+    </main>
+  </body>
+</html>

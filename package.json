@@ -1,0 +1,20 @@
+{
+  "name": "TweetAnalysis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "handlebars": "^4.0.5",
+    "hapi": "^15.2.0",
+    "hoek": "^4.1.0",
+    "node-fetch": "^1.6.3",
+    "twit": "^2.2.5",
+    "vision": "^4.1.0"
+  }
+}
