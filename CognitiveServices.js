@@ -7,18 +7,19 @@ const topics_url = 'https://westus.api.cognitive.microsoft.com/text/analytics/v2
 
 const key = process.env.MS_KEY;
 
-module.exports.getSentiment = text => {
+module.exports.getSentiment = tweetArr => {
   return new Promise((resolve, reject) => {
-    if(!text) return reject('wtf?');
+    if(!tweetArr) return reject('wtf?');
     let payload = {
-      'documents': [
-        {
-          'language': 'en',
-          'id': '1',
-          'text': text
-        }
-      ]
+      'documents': []
     };
+    tweetArr.forEach((tweet) => {
+      payload.documents.push({
+        'language': 'en',
+        'id': tweet.id,
+        'text': tweet.text
+      });
+    })
     fetch(sentiment_url, {
       headers: {
         'Ocp-Apim-Subscription-Key': key
@@ -29,29 +30,25 @@ module.exports.getSentiment = text => {
     .then(res => res.json())
     .then(data => {
       if(data.message) return reject(data.message);
-      const sentimentScore = data.documents[0].score;
-      if(sentimentScore < 0.5) {
-        resolve('😔')
-      } else {
-        resolve('😊')
-      }
+      resolve(data.documents);
     })
     .catch(reject);
   });
 }
 
-module.exports.getKeyPhrases = text => {
+module.exports.getKeyPhrases = tweetArr => {
   return new Promise((resolve, reject) => {
-    if(!text) throw new Error('wtf?')
+    if(!tweetArr) throw new Error('wtf?')
     let payload = {
-      'documents': [
-        {
-          'language': 'en',
-          'id': '1',
-          'text': text
-        }
-      ]
+      'documents': []
     };
+    tweetArr.forEach(tweet => {
+      payload.documents.push({
+        'language': 'en',
+        'id': tweet.id,
+        'text': tweet.text
+      });
+    });
     fetch(key_phrases_url, {
       headers: {
         'Ocp-Apim-Subscription-Key': key
@@ -62,7 +59,7 @@ module.exports.getKeyPhrases = text => {
     .then(res => res.json())
     .then(data => {
       if(data.message) return reject(data.message);
-      resolve(data.documents[0].keyPhrases);
+      resolve(data.documents);
     })
     .catch(reject);
   });

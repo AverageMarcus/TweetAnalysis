@@ -43,36 +43,29 @@ server.register(require('vision'), (err) => {
         let results = [];
         tweetService.getUsersTweets(request.params.user)
           .then(tweets => {
-            let promises = [];
-
-            tweets.forEach(status => {
-              promises.push(new Promise((resolve, reject) => {
-                let result = {};
-                cognitiveServices.getSentiment(status.text)
-                  .then(sentiment => {
-                    result.sentiment = sentiment;
-                  })
-                  .then(() => {
-                    return cognitiveServices.getKeyPhrases(status.text);
-                  })
-                  .then(keyPhrase => {
-                    result.keyPhrase = keyPhrase.join(', ');
-                  })
-                  .then(() => {
-                    results.push({
-                      id: status.id_str,
-                      text: status.text,
-                      sentiment: result.sentiment,
-                      keyPhrase: result.keyPhrase
-                    });
-                  })
-                  .then(resolve)
-                  .catch(reject);
-              }));
-            });
-
-            Promise.all(promises)
+            let sentimentResults;
+            let phraseResults;
+            cognitiveServices.getSentiment(tweets)
+              .then(data => {
+                sentimentResults = data;
+              })
               .then(() => {
+                return cognitiveServices.getKeyPhrases(tweets);
+              })
+              .then(data => {
+                phraseResults = data;
+              })
+              .then(() => {
+                let results = [];
+                tweets.forEach(tweet => {
+                  results.push({
+                    id: tweet.id_str,
+                    text: tweet.text,
+                    sentiment: sentimentResults.find(s => s.id == tweet.id).score < 0.5 ? '😔' : '😊',
+                    keyPhrase: phraseResults.find(s => s.id == tweet.id).keyPhrases.join(', ')
+                  });
+                });
+
                 let summary = {
                   '😔': 0,
                   '😊': 0,
@@ -90,9 +83,7 @@ server.register(require('vision'), (err) => {
                 summary['😔'] = (summary['😔'] / results.length) * 100;
 
                 reply.view('user', { user: request.params.user, tweets: results, summary: summary});
-              })
-              .catch(err => {
-                return reply.view('error', {err: err});
+
               });
           });
       } catch(err) {
