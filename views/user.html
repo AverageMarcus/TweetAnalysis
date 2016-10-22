@@ -2,8 +2,8 @@
 
 <h2 class="sentiment sentiment-{{summary.sentiment}}">{{summary.sentiment}}</h2>
 <h3>
-  <div class="bar bar-😊" style="width:{{summary.😊}}%"></div>
-  <div class="bar bar-😔" style="width:{{summary.😔}}%"></div>
+  <div class="bar bar-😊" style="width:{{summary.😊}}%">{{summary.😊}}%</div>
+  <div class="bar bar-😔" style="width:{{summary.😔}}%">{{summary.😔}}%</div>
 </h3>
 
 <ul>
@@ -12,7 +12,6 @@
       <div class="tweet" data-id="{{this.id}}">
        <div class="analysis-results">
           <span class="sentiment sentiment-{{this.sentiment}}">{{this.sentiment}}</span>
-          <span class="key-phrase">{{this.keyPhrase}}</span>
        </div>
       </div>
     </li>

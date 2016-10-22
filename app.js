@@ -50,26 +50,18 @@ server.register(require('vision'), (err) => {
                 sentimentResults = data;
               })
               .then(() => {
-                return cognitiveServices.getKeyPhrases(tweets);
-              })
-              .then(data => {
-                phraseResults = data;
-              })
-              .then(() => {
                 let results = [];
                 tweets.forEach(tweet => {
                   results.push({
                     id: tweet.id_str,
                     text: tweet.text,
-                    sentiment: sentimentResults.find(s => s.id == tweet.id).score < 0.5 ? '😔' : '😊',
-                    keyPhrase: phraseResults.find(s => s.id == tweet.id).keyPhrases.join(', ')
+                    sentiment: sentimentResults.find(s => s.id == tweet.id).score < 0.5 ? '😔' : '😊'
                   });
                 });
 
                 let summary = {
                   '😔': 0,
-                  '😊': 0,
-                  words: {}
+                  '😊': 0
                 };
                 results.forEach(result => {
                   if(result.sentiment === '😊') {
