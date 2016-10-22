@@ -16,5 +16,8 @@
     "node-fetch": "^1.6.3",
     "twit": "^2.2.5",
     "vision": "^4.1.0"
+  },
+  "engines": {
+    "node": "6.x"
   }
 }
