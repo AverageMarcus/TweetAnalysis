@@ -71,8 +71,8 @@ server.register(require('vision'), (err) => {
                   }
                 });
                 summary.sentiment = summary['😊'] > summary['😔'] ? '😊' : '😔';
-                summary['😊'] = (summary['😊'] / results.length) * 100;
-                summary['😔'] = (summary['😔'] / results.length) * 100;
+                summary['😊'] = ((summary['😊'] / results.length) * 100).toFixed(0);
+                summary['😔'] = ((summary['😔'] / results.length) * 100).toFixed(0);
 
                 reply.view('user', { user: request.params.user, tweets: results, summary: summary});
 
