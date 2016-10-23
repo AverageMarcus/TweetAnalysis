@@ -13,7 +13,8 @@ module.exports.getUsersTweets = user => {
 
   return new Promise((resolve, reject) => {
     twitter.get('statuses/user_timeline', {
-      screen_name: user
+      screen_name: user,
+      include_rts: false
     }, (err, data, response) => {
       if(err || !data) {
         console.log(data)
