@@ -15,7 +15,7 @@ module.exports.getUsersTweets = user => {
     twitter.get('statuses/user_timeline', {
       screen_name: user,
       include_rts: false,
-      count: 200
+      count: 100
     }, (err, data, response) => {
       if(err || !data) {
         console.log(data)
